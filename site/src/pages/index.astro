@@ -2,17 +2,20 @@
 import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
-const count = 6;
-const depth = 3;
+const count = 5;
 ---
 
 <Layout title="CSS Tricks">
   <div class="layer-0">
     {
       (
-        <OrbLayer orbs={count} layer="1">
-          <OrbLayer orbs={count} layer="2">
-            <OrbLayer orbs={count} layer="3" />
+        <OrbLayer orbs={count} layer={1}>
+          <OrbLayer orbs={count} layer={2}>
+            <OrbLayer orbs={count} layer={3}>
+            <OrbLayer orbs={count} layer={4}>
+    
+            </OrbLayer>
+            </OrbLayer>
           </OrbLayer>
         </OrbLayer>
       )
@@ -23,7 +26,8 @@ const depth = 3;
 <style lang="scss" is:global>
   $colour: rgb(28, 106, 208);
 
-  $count: 6;
+    $depth: 4;
+  $count: 5;
   $increment: calc(360 / $count);
 
   div {
@@ -51,6 +55,10 @@ const depth = 3;
     width: 0.5vh;
   }
 
+  .layer-4  {
+    width: 0.25vh;
+  }
+
   @mixin orbit($offset, $distance) {
     from {
       transform: rotate(#{$offset}deg) translateX(#{$distance}+ vh);
@@ -62,14 +70,14 @@ const depth = 3;
     }
   }
 
-  @for $h from 1 through 3 {
+  @for $h from 1 through $depth {
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
-        animation: orbit-#{$h}-#{$i} #{$h * 10}s linear infinite;
+        animation: orbit-#{$h}-#{$i} #{($h * 4) * 5}s linear infinite;
       }
 
       @keyframes orbit-#{$h}-#{$i} {
-        @include orbit(calc($increment * $i), calc((1 / $h) * 12));
+        @include orbit(calc($increment * $i), calc((1 / $h) * 20));
       }
     }
   }
