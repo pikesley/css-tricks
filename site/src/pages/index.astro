@@ -1,7 +1,79 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const count = 6;
+const depth = 3;
 ---
 
-<Layout title="CSS Tricks">wat</Layout>
+<Layout title="CSS Tricks">
+  <div class="layer-0">
+    {
+      [...Array(count).keys()].map((index) => (
+        <div class="layer-1">
+          {[...Array(count).keys()].map((index) => (
+            <div class="layer-2">
+              {[...Array(count).keys()].map((index) => (
+                <div class="layer-3"></div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</Layout>
 
-<style lang="scss"></style>
+<style lang="scss">
+  $colour: rgb(28, 106, 208);
+
+  $count: 6;
+  $increment: calc(360 / $count);
+
+  div {
+    aspect-ratio: 1;
+    background-color: $colour;
+    border-radius: 50%;
+    position: absolute;
+    display: grid;
+    place-items: center;
+  }
+
+  .layer-0 {
+    width: 4vh;
+  }
+
+  .layer-1 {
+    width: 2vh;
+  }
+
+  .layer-2 {
+    width: 1vh;
+  }
+
+  .layer-3 {
+    width: 0.5vh;
+  }
+
+  @mixin orbit($offset, $distance) {
+    from {
+      transform: rotate(#{$offset}deg) translateX(#{$distance}+ vh);
+    }
+
+    to {
+      transform: rotate(calc(#{$offset}deg + 360deg))
+        translateX(#{$distance}+ vh);
+    }
+  }
+
+  @for $h from 1 through 3 {
+    @for $i from 1 through $count {
+      div.layer-#{$h}:nth-of-type(#{$i}) {
+        animation: orbit-#{$h}-#{$i} 100s linear infinite;
+      }
+
+      @keyframes orbit-#{$h}-#{$i} {
+        @include orbit(calc($increment * $i), calc((1 / $h) * 12));
+      }
+    }
+  }
+</style>

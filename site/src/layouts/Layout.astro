@@ -19,3 +19,12 @@ const { title } = Astro.props;
     <slot />
   </body>
 </html>
+
+<style is:global>
+  body {
+    background-color: black;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+  }
+</style>
