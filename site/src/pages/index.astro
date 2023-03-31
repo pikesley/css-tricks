@@ -12,9 +12,7 @@ const count = 5;
         <OrbLayer orbs={count} layer={1}>
           <OrbLayer orbs={count} layer={2}>
             <OrbLayer orbs={count} layer={3}>
-            <OrbLayer orbs={count} layer={4}>
-    
-            </OrbLayer>
+              <OrbLayer orbs={count} layer={4}></OrbLayer>
             </OrbLayer>
           </OrbLayer>
         </OrbLayer>
@@ -26,7 +24,7 @@ const count = 5;
 <style lang="scss" is:global>
   $colour: rgb(51, 107, 180);
 
-    $depth: 4;
+  $depth: 4;
   $count: 5;
   $increment: calc(360 / $count);
 
@@ -55,7 +53,7 @@ const count = 5;
     width: 0.5vh;
   }
 
-  .layer-4  {
+  .layer-4 {
     width: 0.25vh;
   }
 
