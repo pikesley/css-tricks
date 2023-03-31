@@ -24,7 +24,7 @@ const count = 5;
 </Layout>
 
 <style lang="scss" is:global>
-  $colour: rgb(28, 106, 208);
+  $colour: rgb(51, 107, 180);
 
     $depth: 4;
   $count: 5;
@@ -73,11 +73,11 @@ const count = 5;
   @for $h from 1 through $depth {
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
-        animation: orbit-#{$h}-#{$i} #{($h * 4) * 5}s linear infinite;
+        animation: orbit-#{$h}-#{$i} #{($h * 4) * 3}s linear infinite;
       }
 
       @keyframes orbit-#{$h}-#{$i} {
-        @include orbit(calc($increment * $i), calc((1 / $h) * 16));
+        @include orbit(calc($increment * $i), calc((1 / $h) * 12));
       }
     }
   }
