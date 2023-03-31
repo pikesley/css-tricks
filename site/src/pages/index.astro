@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import OrbLayer from "../components/OrbLayer.astro";
 
 const count = 6;
 const depth = 3;
@@ -8,22 +9,18 @@ const depth = 3;
 <Layout title="CSS Tricks">
   <div class="layer-0">
     {
-      [...Array(count).keys()].map((index) => (
-        <div class="layer-1">
-          {[...Array(count).keys()].map((index) => (
-            <div class="layer-2">
-              {[...Array(count).keys()].map((index) => (
-                <div class="layer-3"></div>
-              ))}
-            </div>
-          ))}
-        </div>
-      ))
+      (
+        <OrbLayer orbs={count} layer="1">
+          <OrbLayer orbs={count} layer="2">
+            <OrbLayer orbs={count} layer="3" />
+          </OrbLayer>
+        </OrbLayer>
+      )
     }
   </div>
 </Layout>
 
-<style lang="scss">
+<style lang="scss" is:global>
   $colour: rgb(28, 106, 208);
 
   $count: 6;
@@ -68,7 +65,7 @@ const depth = 3;
   @for $h from 1 through 3 {
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
-        animation: orbit-#{$h}-#{$i} 100s linear infinite;
+        animation: orbit-#{$h}-#{$i} #{$h * 10}s linear infinite;
       }
 
       @keyframes orbit-#{$h}-#{$i} {

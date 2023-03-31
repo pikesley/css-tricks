@@ -1,0 +1,20 @@
+---
+export interface Props {
+  orbs: number;
+  layer: number;
+}
+
+const { orbs, layer } = Astro.props;
+
+function className(index: number) {
+  return "layer-" + index;
+}
+---
+
+{
+  [...Array(orbs).keys()].map((index) => (
+    <div class={className(layer)}>
+      <slot />
+    </div>
+  ))
+}
