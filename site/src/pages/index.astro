@@ -2,13 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
-const count = 3;
-const depth = 8; // more than 4 kills my computer
+// match these with the SCSS vars
+const count = 3; // orbs per layer
+const depth = 4; // layers
 ---
 
 <style lang="scss" is:global>
   $count: 3; // orbs per layer
-  $depth: 8; // layers
+  $depth: 4; // layers
+
   $centre-width: 4vh; // largest orb size
   $width-factor: 0.5; // multiplier for the width on each iteration
   $distance-numerator: 20; // distance from parent is this divided by layer-value
@@ -17,7 +19,7 @@ const depth = 8; // more than 4 kills my computer
   $duration-default: 100; // default rotation time, added to the above
   
   $colour: rgb(51, 107, 180); // default colour
-  
+
   $increment: calc(360 / $count);
 
   div {
