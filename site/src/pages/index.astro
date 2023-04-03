@@ -3,21 +3,21 @@ import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
 // match these with the SCSS vars
-const count = 3; // orbs per layer
-const depth = 4; // layers
+const count = 2; // orbs per layer
+const depth = 8; // layers
 ---
 
 <style lang="scss" is:global>
-  $count: 3; // orbs per layer
-  $depth: 4; // layers
+  $count: 2; // orbs per layer
+  $depth: 8; // layers
 
   $centre-width: 4vh; // largest orb size
   $width-factor: 0.5; // multiplier for the width on each iteration
-  $distance-numerator: 20; // distance from parent is this divided by layer-value
-  
+  $distance-numerator: 10; // distance from parent is this divided by layer-value
+
   $duration-multiplier: 50; // this is multiplied by the layer-value as a timing offset
   $duration-default: 100; // default rotation time, added to the above
-  
+
   $colour: rgb(51, 107, 180); // default colour
 
   $increment: calc(360 / $count);
@@ -54,16 +54,14 @@ const depth = 4; // layers
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
         animation: orbit-#{$h}-#{$i}
-          #{($h * $duration-multiplier) + $duration-default}s
+          #{($h * $duration-multiplier) +
+          $duration-default}s
           linear
           infinite;
       }
 
       @keyframes orbit-#{$h}-#{$i} {
-        @include orbit(
-          calc($increment * $i),
-          calc($distance-numerator / $h)
-        );
+        @include orbit(calc($increment * $i), calc($distance-numerator / $h));
       }
     }
   }
