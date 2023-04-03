@@ -1,10 +1,11 @@
 ---
 export interface Props {
   orbs: number;
-  layer: number;
+  depth: number;
+  layer?: number;
 }
 
-const { orbs, layer } = Astro.props;
+var { orbs, layer = 0, depth } = Astro.props;
 
 function className(index: number) {
   return "layer-" + index;
@@ -14,7 +15,9 @@ function className(index: number) {
 {
   [...Array(orbs).keys()].map((index) => (
     <div class={className(layer)}>
-      <slot />
+      {depth > 0 && (
+        <Astro.self orbs={orbs} layer={layer + 1} depth={depth - 1} />
+      )}
     </div>
   ))
 }

@@ -2,30 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
-const count = 5;
+const count = 3;
+const depth = 8; // more than 4 kills my computer
 ---
 
-<Layout title="CSS Tricks">
-  <div class="layer-0">
-    {
-      (
-        <OrbLayer orbs={count} layer={1}>
-          <OrbLayer orbs={count} layer={2}>
-            <OrbLayer orbs={count} layer={3}>
-              <OrbLayer orbs={count} layer={4}></OrbLayer>
-            </OrbLayer>
-          </OrbLayer>
-        </OrbLayer>
-      )
-    }
-  </div>
-</Layout>
-
 <style lang="scss" is:global>
-  $colour: rgb(51, 107, 180);
-
-  $depth: 4;
-  $count: 5;
+  $count: 3; // orbs per layer
+  $depth: 8; // layers
+  $centre-width: 4vh; // largest orb size
+  $width-factor: 0.5; // multiplier for the width on each iteration
+  $distance-numerator: 20; // distance from parent is this divided by layer-value
+  
+  $duration-multiplier: 50; // this is multiplied by the layer-value as a timing offset
+  $duration-default: 100; // default rotation time, added to the above
+  
+  $colour: rgb(51, 107, 180); // default colour
+  
   $increment: calc(360 / $count);
 
   div {
@@ -37,24 +29,12 @@ const count = 5;
     place-items: center;
   }
 
-  .layer-0 {
-    width: 4vh;
-  }
-
-  .layer-1 {
-    width: 2vh;
-  }
-
-  .layer-2 {
-    width: 1vh;
-  }
-
-  .layer-3 {
-    width: 0.5vh;
-  }
-
-  .layer-4 {
-    width: 0.25vh;
+  $width: $centre-width;
+  @for $h from 0 through $depth {
+    div.layer-#{$h} {
+      width: $width;
+    }
+    $width: calc($width * $width-factor);
   }
 
   @mixin orbit($offset, $distance) {
@@ -71,12 +51,22 @@ const count = 5;
   @for $h from 1 through $depth {
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
-        animation: orbit-#{$h}-#{$i} #{($h * 4) * 3}s linear infinite;
+        animation: orbit-#{$h}-#{$i}
+          #{($h * $duration-multiplier) + $duration-default}s
+          linear
+          infinite;
       }
 
       @keyframes orbit-#{$h}-#{$i} {
-        @include orbit(calc($increment * $i), calc((1 / $h) * 12));
+        @include orbit(
+          calc($increment * $i),
+          calc($distance-numerator / $h)
+        );
       }
     }
   }
 </style>
+
+<Layout title="CSS Tricks">
+  {(<OrbLayer orbs={count} depth={depth} />)}
+</Layout>
