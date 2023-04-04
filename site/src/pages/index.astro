@@ -3,22 +3,23 @@ import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
 // match these with the SCSS vars
-const count = 2; // orbs per layer
-const depth = 8; // layers
+const count = 5; // orbs per layer
+const depth = 4; // layers
 ---
 
 <style lang="scss" is:global>
-  $count: 2; // orbs per layer
-  $depth: 8; // layers
+  $count: 5; // orbs per layer
+  $depth: 4; // layers
 
   $centre-width: 4vh; // largest orb size
   $width-factor: 0.5; // multiplier for the width on each iteration
-  $distance-numerator: 10; // distance from parent is this divided by layer-value
+  $distance-numerator: 20; // distance from parent is this divided by layer-value
 
-  $duration-multiplier: 50; // this is multiplied by the layer-value as a timing offset
-  $duration-default: 100; // default rotation time, added to the above
+  $duration-multiplier: 10; // this is multiplied by the layer-value as a timing offset
+  $duration-default: 15; // default rotation time, added to the above
 
   $colour: rgb(51, 107, 180); // default colour
+  $highlight-colour: rgb(248, 38, 195);
 
   $increment: calc(360 / $count);
 
@@ -32,7 +33,7 @@ const depth = 8; // layers
   }
 
   $width: $centre-width;
-  @for $h from 0 through $depth {
+  @for $h from 0 through ($depth + 1) {
     div.layer-#{$h} {
       width: $width;
     }
@@ -50,7 +51,7 @@ const depth = 8; // layers
     }
   }
 
-  @for $h from 1 through $depth {
+  @for $h from 1 through $depth + 1 {
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
         animation: orbit-#{$h}-#{$i}
@@ -65,8 +66,15 @@ const depth = 8; // layers
       }
     }
   }
+
+  #orb-12, #orb-377 {
+    background-color: $highlight-colour;
+    z-index: 10;
+  }
 </style>
 
 <Layout title="CSS Tricks">
-  {(<OrbLayer orbs={count} depth={depth} />)}
+  <div class="layer-0">
+    {(<OrbLayer orbs={count} depth={depth} />)}
+  </div>
 </Layout>
