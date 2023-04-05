@@ -5,14 +5,14 @@ export interface Props {
   layer?: number;
 }
 
-var { orbs, depth, layer=1, state={total:0} } = Astro.props;
+var { orbs, depth, layer = 1, state = { total: 0 } } = Astro.props;
 
 function className(index: number) {
   return "layer-" + index;
 }
 
 function idName() {
-  return "orb-" + state.total
+  return "orb-" + state.total;
 }
 
 function increment() {
@@ -25,7 +25,12 @@ function increment() {
     <div class={className(layer)} id={idName()}>
       {increment()}
       {depth > 0 && (
-        <Astro.self orbs={orbs} layer={layer + 1} depth={depth - 1} state={state} />
+        <Astro.self
+          orbs={orbs}
+          layer={layer + 1}
+          depth={depth - 1}
+          state={state}
+        />
       )}
     </div>
   ))

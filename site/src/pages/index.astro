@@ -3,25 +3,30 @@ import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
 // match these with the SCSS vars
-const count = 5; // orbs per layer
-const depth = 4; // layers
+const count = 3; // orbs per layer
+const depth = 5; // layers
 ---
 
 <style lang="scss" is:global>
-  $count: 5; // orbs per layer
-  $depth: 4; // layers
+  $count: 36; // orbs per layer
+  $depth: 5; // layers
 
   $centre-width: 4vh; // largest orb size
-  $width-factor: 0.5; // multiplier for the width on each iteration
+  $width-factor: 0.4; // multiplier for the width on each iteration
   $distance-numerator: 20; // distance from parent is this divided by layer-value
 
-  $duration-multiplier: 10; // this is multiplied by the layer-value as a timing offset
-  $duration-default: 15; // default rotation time, added to the above
+  $duration-multiplier: 0; // this is multiplied by the layer-value as a timing offset
+  $duration-default: 10; // default rotation time, added to the above
 
-  $colour: rgb(51, 107, 180); // default colour
-  $highlight-colour: rgb(248, 38, 195);
+  $colour: rgb(255, 255, 255); // default colour
+  $highlight-colour: rgb(255, 0, 247);
+  $base-colour: rgb(0, 0, 0);
 
   $increment: calc(360 / $count);
+
+  body {
+    background-color: $base-colour;
+  }
 
   div {
     aspect-ratio: 1;
@@ -67,10 +72,11 @@ const depth = 4; // layers
     }
   }
 
-  #orb-12, #orb-377 {
-    background-color: $highlight-colour;
-    z-index: 10;
-  }
+  // #orb-12,
+  // #orb-377 {
+  //   background-color: $highlight-colour;
+  //   z-index: 10;
+  // }
 </style>
 
 <Layout title="CSS Tricks">
