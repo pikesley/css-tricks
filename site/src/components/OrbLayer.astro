@@ -7,8 +7,8 @@ export interface Props {
 
 var { orbs, depth, layer = 1, state = { total: 0 } } = Astro.props;
 
-function className(index: number) {
-  return "layer-" + index;
+function className(prefix:string, index: number) {
+  return prefix + "-" + index;
 }
 
 function idName() {
@@ -22,7 +22,7 @@ function increment() {
 
 {
   [...Array(orbs).keys()].map((index) => (
-    <div class={className(layer)} id={idName()}>
+    <div class:list={[className("layer", layer), className("index", index)]} id={idName()}>
       {increment()}
       {depth > 0 && (
         <Astro.self

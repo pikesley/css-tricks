@@ -3,13 +3,13 @@ import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
 // match these with the SCSS vars
-const count = 3; // orbs per layer
-const depth = 5; // layers
+const count = 5; // orbs per layer
+const depth = 3; // layers
 ---
 
 <style lang="scss" is:global>
-  $count: 36; // orbs per layer
-  $depth: 5; // layers
+  $count: 5; // orbs per layer
+  $depth: 3; // layers
 
   $centre-width: 4vh; // largest orb size
   $width-factor: 0.4; // multiplier for the width on each iteration
@@ -30,7 +30,7 @@ const depth = 5; // layers
 
   div {
     aspect-ratio: 1;
-    background-color: $colour;
+    // background-color: $colour;
     border-radius: 50%;
     position: absolute;
     display: grid;
@@ -42,9 +42,9 @@ const depth = 5; // layers
     div.layer-#{$h} {
       width: $width;
     }
-    $width: calc($width * $width-factor);
+    $width: calc($width * $width-factor);    
   }
-
+  
   @mixin orbit($offset, $distance) {
     from {
       transform: rotate(#{$offset}deg) translateX(#{$distance}+ vh);
@@ -56,20 +56,31 @@ const depth = 5; // layers
     }
   }
 
+  $hue: 0;
+  $hue-increment: calc(360 / $count);    
+
+  @for $i from 0 through $count {
+    div.index-#{$i} {
+      $hue: calc($i * $hue-increment);
+      background-color: hsl($hue, 100%, 50%);
+      @debug $hue;
+    }
+  }
+
   @for $h from 1 through $depth + 1 {
     @for $i from 1 through $count {
       div.layer-#{$h}:nth-of-type(#{$i}) {
         animation: orbit-#{$h}-#{$i}
-          #{($h * $duration-multiplier) +
+        #{($h * $duration-multiplier) +
           $duration-default}s
           linear
           infinite;
+        }
+        
+        @keyframes orbit-#{$h}-#{$i} {
+          @include orbit(calc($increment * $i), calc($distance-numerator / $h));
+        }
       }
-
-      @keyframes orbit-#{$h}-#{$i} {
-        @include orbit(calc($increment * $i), calc($distance-numerator / $h));
-      }
-    }
   }
 
   // #orb-12,
