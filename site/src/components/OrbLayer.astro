@@ -24,7 +24,7 @@ function increment() {
   [...Array(orbs).keys()].map((index) => (
     <div class:list={[className("layer", layer), className("index", index)]} id={idName()}>
       {increment()}
-      {depth > 0 && (
+      {depth > 1 && (
         <Astro.self
           orbs={orbs}
           layer={layer + 1}

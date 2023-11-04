@@ -4,18 +4,18 @@ import OrbLayer from "../components/OrbLayer.astro";
 
 // match these with the SCSS vars
 const count = 3; // orbs per layer
-const depth = 3; // layers
+const depth = 4; // layers
 ---
 
 <style lang="scss" is:global>
-  $count: 18; // orbs per layer
-  $depth: 3; // layers
+  $count: 6; // orbs per layer
+  $depth: 4; // layers
 
-  $centre-width: 4vh; // largest orb size
-  $width-factor: 0.4; // multiplier for the width on each iteration
+  $centre-width: 3vh; // largest orb size
+  $width-factor: 0.7; // multiplier for the width on each iteration
   $distance-numerator: 20; // distance from parent is this divided by layer-value
 
-  $duration-multiplier: 0; // this is multiplied by the layer-value as a timing offset
+  $duration-multiplier: 2; // this is multiplied by the layer-value as a timing offset
   $duration-default: 8; // default rotation time, added to the above
 
   $colour: rgb(255, 255, 255); // default colour
@@ -56,12 +56,11 @@ const depth = 3; // layers
     }
   }
 
-  $hue: 0;
   $hue-increment: calc(360 / $count);
 
   @for $i from 0 through $count {
     div.index-#{$i} {
-      $hue: calc($i * $hue-increment);
+      $hue: calc($i * $hue-increment / 2);
       background-color: hsl($hue, 100%, 50%);
       @debug $hue;
     }
