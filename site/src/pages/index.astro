@@ -3,12 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import OrbLayer from "../components/OrbLayer.astro";
 
 // match these with the SCSS vars
-const count = 5; // orbs per layer
+const count = 3; // orbs per layer
 const depth = 3; // layers
 ---
 
 <style lang="scss" is:global>
-  $count: 35; // orbs per layer
+  $count: 18; // orbs per layer
   $depth: 3; // layers
 
   $centre-width: 4vh; // largest orb size
@@ -16,7 +16,7 @@ const depth = 3; // layers
   $distance-numerator: 20; // distance from parent is this divided by layer-value
 
   $duration-multiplier: 0; // this is multiplied by the layer-value as a timing offset
-  $duration-default: 10; // default rotation time, added to the above
+  $duration-default: 8; // default rotation time, added to the above
 
   $colour: rgb(255, 255, 255); // default colour
   $highlight-colour: rgb(255, 0, 247);
@@ -42,9 +42,9 @@ const depth = 3; // layers
     div.layer-#{$h} {
       width: $width;
     }
-    $width: calc($width * $width-factor);    
+    $width: calc($width * $width-factor);
   }
-  
+
   @mixin orbit($offset, $distance) {
     from {
       transform: rotate(#{$offset}deg) translateX(#{$distance}+ vh);
@@ -57,7 +57,7 @@ const depth = 3; // layers
   }
 
   $hue: 0;
-  $hue-increment: calc(360 / $count);    
+  $hue-increment: calc(360 / $count);
 
   @for $i from 0 through $count {
     div.index-#{$i} {
@@ -76,7 +76,7 @@ const depth = 3; // layers
           linear
           infinite;
         }
-        
+
         @keyframes orbit-#{$h}-#{$i} {
           @include orbit(calc($increment * $i), calc($distance-numerator / $h));
         }
